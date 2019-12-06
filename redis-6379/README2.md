@@ -1,4 +1,4 @@
-# Redis配置文件样例
+``````````# Redis配置文件样例
 
 # Note on units: when memory size is needed, it is possible to specifiy
 # it in the usual form of 1k 5GB 4M and so forth:
@@ -109,7 +109,7 @@ dir ./
 
 # When a slave lost the connection with the master, or when the replication
 # is still in progress, the slave can act in two different ways:
-#
+#``
 # 1) if slave-serve-stale-data is set to 'yes' (the default) the slave will
 #    still reply to client requests, possibly with out of data data, or the
 #    data set may just be empty if this is the first synchronization.
@@ -423,4 +423,4 @@ activerehashing yes
 
 # 指定包含其他的配置文件，可以在同一主机上多个Redis实例之间使用同一份配置文件，而同时各实例又拥有自己的特定配置文件
 # include /path/to/local.conf
-# include /path/to/other.conf
+# include /path/to/other.conf```````````````````

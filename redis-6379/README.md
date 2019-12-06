@@ -1,4 +1,4 @@
-一、key pattern 查询相应的key
+```一、key pattern 查询相应的key
 
 　　（1）redis允许模糊查询key　　有3个通配符  *、?、[]
 
@@ -274,4 +274,4 @@
 
 　　　　　　问：服务器存储多少条慢查询记录
 
-　　　　　　答：由slowlog-max-len 128，来做限制
+　　　　　　答：由slowlog-max-len 128，来做限制```
