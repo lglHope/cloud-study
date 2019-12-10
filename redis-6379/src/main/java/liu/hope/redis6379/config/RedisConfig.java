@@ -2,14 +2,18 @@ package liu.hope.redis6379.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.*;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Duration;
 
 /**
  * @author Hope
@@ -19,6 +23,28 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 @Configuration
 public class RedisConfig {
+
+    /**
+     * 申明缓存管理器，会创建一个切面（aspect）并触发Spring缓存注解的切点（pointcut）
+     * 根据类或者方法所使用的注解以及缓存的状态，这个切面会从缓存中获取数据，将数据添加到缓存之中或者从缓存中移除某个值
+
+     * @return
+     */
+    @Bean
+    public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        //初始化一个RedisCacheWriter
+        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
+        //设置CacheManager的值序列化方式为json序列化
+        RedisSerializer<Object> jsonSerializer = new GenericJackson2JsonRedisSerializer();
+        RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair
+                .fromSerializer(jsonSerializer);
+        RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeValuesWith(pair);
+        //设置默认超过期时间是30秒
+        defaultCacheConfig.entryTtl(Duration.ofSeconds(30));
+        //初始化RedisCacheManager
+        return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
+    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
