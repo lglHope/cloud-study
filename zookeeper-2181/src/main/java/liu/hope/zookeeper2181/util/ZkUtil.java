@@ -29,7 +29,7 @@ public class ZkUtil {
     /**
      * 判断指定节点是否存在
      * @param path
-     * @param needWatch  指定是否复用zookeeper中默认的Watcher
+     * @param needWatch  指定是否复用zookeeper中默认的Watcher,创建zookeeper对象的时候使用的默认Watcher
      * @return
      */
     public Stat exists(String path, boolean needWatch){
@@ -49,7 +49,7 @@ public class ZkUtil {
      * @param watcher  传入指定的监听类
      * @return
      */
-    public Stat exists(String path, Watcher watcher ){
+    public Stat exists(String path, Watcher watcher){
         try {
             return zkClient.exists(path,watcher);
         } catch (Exception e) {

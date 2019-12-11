@@ -1,6 +1,7 @@
 package liu.hope.zookeeper2181;
 
 
+import liu.hope.zookeeper2181.listen.WatcherListen;
 import liu.hope.zookeeper2181.util.ZkUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,7 @@ public class Zookeeper2181ApplicationTests {
 
     @Test
     public void contextLoads() {
-        zkUtil.exists("/mynode", false);
+        zkUtil.exists("/mynode", new WatcherListen());
         zkUtil.deleteNode("/mynode");
         boolean world = zkUtil.createNode("/mynode", "world");
         System.out.println(world);
