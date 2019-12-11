@@ -103,7 +103,7 @@ dir ./
 # slaveof <masterip> <masterport>
 
 
-# 当master服务设置了密码保护时，slav服务连接master的密码
+# 当master服务设置了密码保护时，slave服务连接master的密码
 # 下文的“requirepass”配置项可以指定密码
 # masterauth <master-password>
 
