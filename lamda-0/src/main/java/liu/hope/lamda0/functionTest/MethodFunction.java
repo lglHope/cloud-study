@@ -5,7 +5,6 @@ import liu.hope.lamda0.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 /**
  * @author Hope
@@ -51,7 +50,7 @@ public class MethodFunction {
 
         // 所以这里 User::checkSalary等同于user -> user.getSalary() > 3000？？？
         // 相当于写了一个类实现了Predicate接口并重写test方法，然后Predicate多态引用接收？
-        // 也是就创建了一根真正的类而不是匿名内部类？
+        // 也是就创建了一个真正的类而不是匿名内部类？
     }
 
     /**
@@ -70,9 +69,12 @@ public class MethodFunction {
      */
     private static void second(List<User> users, Predicate<User> predicate){
         for (User user : users) {
+            // 上面所有的方法都是创建了一个对象，具体的实现还是要调用接口的方法，来达到判断的效果
             if (predicate.test(user)) {
                 System.out.println(user);
             }
         }
     }
+
+
 }
