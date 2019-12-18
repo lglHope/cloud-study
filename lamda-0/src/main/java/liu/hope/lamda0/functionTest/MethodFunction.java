@@ -51,6 +51,7 @@ public class MethodFunction {
         // 所以这里 User::checkSalary等同于user -> user.getSalary() > 3000？？？
         // 相当于写了一个类实现了Predicate接口并重写test方法，然后Predicate多态引用接收？
         // 也是就创建了一个真正的类而不是匿名内部类？
+        // 使用使用函数式接口注意参数类型和返回值类型
     }
 
     /**
