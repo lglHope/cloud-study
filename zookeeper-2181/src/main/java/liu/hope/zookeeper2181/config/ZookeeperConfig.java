@@ -58,9 +58,9 @@ public class ZookeeperConfig {
         return zooKeeper;
     }
 
-//    @Bean(name = "zkClient")
-//    public ZkClient zkClient(){
-//        return new ZkClient(new ZkConnection(connectString), timeout, new SerializableSerializer());
-//    }
+    @Bean(name = "zkClient")
+    public ZkClient zkClient(){
+        return new ZkClient(new ZkConnection(connectString), timeout, new SerializableSerializer());
+    }
 
 }

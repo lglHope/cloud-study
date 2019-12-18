@@ -1,11 +1,14 @@
 zookeeper:
-#  address: 192.168.137.88:2181,192.168.137.88:2182,192.168.137.88:2183
-  address: 192.168.31.193:2181
-  timeout: 1000
+  address: 192.168.137.88:2181,192.168.137.88:2182,192.168.137.88:2183
+#  address: 192.168.137.88:2181
+  timeout: 6000
 dubbo:
 #  此处又一个疑问：在这没有指明dubbo的地址，tomcat里面已启动的dubbo-admin是如何发现服务的，且它起到了什么作用
   registry:
-    address: zookeeper://192.168.31.193:2181
+#    集群
+    address: zookeeper://192.168.137.88:2181?backup=192.168.137.88:2182,192.168.137.88:2183
+#    单机
+#    address: zookeeper://192.168.137.88:2181
   application:
     name: dubbo-provider
   protocol:
