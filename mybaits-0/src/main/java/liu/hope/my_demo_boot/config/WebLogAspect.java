@@ -1,7 +1,7 @@
 package liu.hope.my_demo_boot.config;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,8 +19,8 @@ import java.util.Arrays;
 //@Order(5)  // 设置切面的优先级  值越小优先级越高   在切入点前的操作，按order的值由小到大执行  在切入点后的操作，按order的值由大到小执行
 public class WebLogAspect {
 
-    private Log logger = LogFactory.getLog(getClass());
-    ThreadLocal<Long> threadLocal = new ThreadLocal<>();
+    private Logger logger = LogManager.getLogger(getClass());
+    private ThreadLocal<Long> threadLocal = new ThreadLocal<>();
 
     @Pointcut("execution(public * *..*.controller.*.*(..))")
     public void webLog(){}

@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import liu.hope.my_demo_boot.entity.Student;
 import liu.hope.my_demo_boot.service.StudentService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -13,6 +15,8 @@ import java.util.*;
 @RestController
 @RequestMapping(value="/student")     // 通过这里配置使下面的映射都在/students下，可去除
 public class StudentController {
+
+    private Logger logger = LogManager.getLogger(getClass());
 
     @Resource
     private StudentService studentService;

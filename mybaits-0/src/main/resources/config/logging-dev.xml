@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出-->
+<!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
+<Configuration status="INFO" monitorInterval="30">
+    <!--Appender 输出源,可以简单理解为配置要写到哪里怎么写-->
+    <!--Logger 日志分根器,可以简单理解为配置哪些信息写到哪些append里-->
+    <Appenders>
+        <!--建议bufferSize配置,减少频繁写操作。为了方便看到是否有往数据库写成功，我在这里故意设置1表示每来一条记录都刷新往NoSql写 -->
+        <NoSql name="mongoAppender" bufferSize="1">
+            <!--写到mongodb数据库名为"log"里的集合名为"log4j2"中,数据库需要先手动创建好，集合不需要手动创建，如果集合"log4j2"不存在，会自动创建-->
+            <!-- 本地mongodb没开启账号验证 -->
+            <MongoDb3 databaseName="logs" collectionName="log" server="192.168.31.193" port="27017"
+                     username="admin" password="123456"/>
+
+            <!-- 连接远程mongodb，需要校验账号密码，注意账号与数据库的权限问题，如果没权限会报错:
+            The database is not up, or you are not authenticated, try supplying a username and password to the MongoDB provider-->
+            <!--            <MongoDb3 databaseName="log" collectionName="log4j2" server="你的远程mongodb服务地址" port="你的远程mongodb服务端口"-->
+            <!--            username="xxx" password="xxx"/>-->
+
+        </NoSql>
+
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <!--筛选过滤,要打印到当前appender的日志信息 如果满足level的接收，不满足的拒绝-->
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!--输出格式布局，每个转换说明符以百分号(%)开头，'%'后面的转换字符有如下:-->
+            <!--
+            p (level) 日志级别
+            c（logger） Logger的Name
+            C (class) Logger调用者的全限定类名 ***
+            d (date) 日期
+            highlight 高亮颜色
+            l (location) 调用位置 ***
+            L (line) 行号
+            m (msg/message) 输出的内容
+            M (methode) 调用方法 ***
+            maker marker的全限定名
+            n 输出平台相关的换行符,如'\n' '\r\n'
+            pid (processId) 进程ID
+            level （p）日志级别
+            r JVM启动后经过的微秒
+            t (tn/thread/threadName) 线程名称
+            T (tid/threadId) 线程ID
+            tp (threadPriority) 线程优先级
+            x (NDC) 线程Context堆栈
+            -->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %l - %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!--日志级别level以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+        <!--日志信息 优先让 子类Logger匹配 -->
+        <!--Logger 父子Logger区分，举个粟子  name为"a"的Logger 是 name为"a.b"的父Logger, 而Root的name是"" 所以Root是所有Logger的父Logger-->
+        <!--Logger name="mongologger"表示捕获日志信息name为mongologger或mongologger.xxx的信息，
+        子类Logger捕获了日志信息不会再被父Logger捕获,即使子类捕获日志信息由于level不满足不会去打印这条日志信息。-->
+        <!--注意 Logger 的 additivity 传递性,默认true
+        当additivity="true"时,表示当Logger捕获到日志信息并且日志信息的level大于等于当前Logger的属性level,
+        日志信息会打印到该Logger所有的appender中包括它的所有父logger的appender(不会管父logger的级别如何）,
+        所以呢,如果Logger的additivity不设置"false"的话，很有可能会出现重复打印的哦-->
+        <!--AsyncLogger 是异步的，additivity需要设置为false,否则可能出现OOM，这个异步底层框架是disruptor，
+        如果没有disruptor3.4及以上依赖包,AsyncLogger日志会打印不出来-->
+<!--        <AsyncLogger name="mongoLogger" level="info" additivity="false">-->
+<!--            &lt;!&ndash;被当前Logger捕获到的日志信息level大于等于当前Logger的level属性时写入到 mongoAppender 里&ndash;&gt;-->
+<!--            &lt;!&ndash;每个Logger 可以设置多个appender ,如果有多个appender 会写入每个appender里&ndash;&gt;-->
+<!--            <appender-ref ref="mongoAppender"/>-->
+<!--        </AsyncLogger>-->
+
+        <!--Root 的name="" , 是所有其他配置的Logger的父Logger-->
+        <!--如果 Root的level="DEBUG",而且没有设置子类捕获过滤如"org"之类的日志信息的话，会发现控制台会打印非常多的调试信息-->
+        <!--解决办法提高Root的level级别，或者设置子类Logger去捕获过滤相关不想要打印的日志信息,注意level级别给低点,并且设置additivity="false"，如下粟子-->
+        <!--
+            <Logger name="org.apache.ibatis" level="DEBUG" additivity="false">
+                <AppenderRef ref="STDOUT" />
+            </Logger>
+        -->
+        <Root level="info" >
+            <appender-ref ref="STDOUT" />
+        </Root>
+        <!-- For application define -->
+        <logger level="info" name="liu.hope.my_demo_boot.config.WebLogToMongoAspect" additivity="false">
+            <AppenderRef ref="mongoAppender" />
+        </logger>
+    </Loggers>
+</Configuration>

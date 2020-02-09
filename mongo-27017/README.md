@@ -1,3 +1,5 @@
+# 创建用户
+db.createUser({user:"admin",pwd:"123456",roles:[{role:"dbOwner",db:"logs"}]})
 # 连接mongo
 mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
 # 显示已存在的数据库

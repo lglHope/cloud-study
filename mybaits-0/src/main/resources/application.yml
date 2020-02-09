@@ -1,26 +1,41 @@
 # thymeleaf默认配置参数
+#spring:
+#  thymeleaf:
+#  # Enable template caching.
+#    cache: true
+#  # Check that the templates location exists.
+#    check-template-location: true
+#  # Content-Type value.
+#    servlet:
+#      content-type: text/html
+#  # Enable MVC Thymeleaf view resolution.
+#    enabled: true
+#  # Template encoding.
+#    encoding: UTF-8
+#  # Comma-separated list of view names that should be excluded from resolution.
+#    excluded-view-names:
+#  # Template mode to be applied to templates. See also StandardTemplateModeHandlers.
+#    mode: HTML5
+#  # Prefix that gets prepended to view names when building a URL.
+#    prefix: classpath:/templates/
+#  # Suffix that gets appended to view names when building a URL.
+#    suffix: .html
+#  # Order of the template resolver in the chain. spring.thymeleaf.view-names= # Comma-separated list of view names that can be resolved.
+#    template-resolver-order:
 spring:
-  thymeleaf:
-  # Enable template caching.
-    cache: true
-  # Check that the templates location exists.
-    check-template-location: true
-  # Content-Type value.
-    servlet:
-      content-type: text/html
-  # Enable MVC Thymeleaf view resolution.
-    enabled: true
-  # Template encoding.
-    encoding: UTF-8
-  # Comma-separated list of view names that should be excluded from resolution.
-    excluded-view-names:
-  # Template mode to be applied to templates. See also StandardTemplateModeHandlers.
-    mode: HTML5
-  # Prefix that gets prepended to view names when building a URL.
-    prefix: classpath:/templates/
-  # Suffix that gets appended to view names when building a URL.
-    suffix: .html
-  # Order of the template resolver in the chain. spring.thymeleaf.view-names= # Comma-separated list of view names that can be resolved.
-    template-resolver-order:
-  profiles:
-    active: mybatis
+  datasource:
+    url: jdbc:mysql://192.168.31.193:3305/admin
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#  data:
+#    mongodb:
+#      uri: mongodb://admin:123456@192.168.31.193:27017/logs
+  # aop切面
+  aop:
+    auto: true
+    proxy-target-class: false
+#  profiles:
+#    active: dev
+logging:
+  config: classpath:config/logging-dev.xml
