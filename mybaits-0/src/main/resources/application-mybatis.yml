@@ -4,3 +4,7 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+# aop切面
+  aop:
+    auto: true
+    proxy-target-class: false

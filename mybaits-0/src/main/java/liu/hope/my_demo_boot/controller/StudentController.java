@@ -26,7 +26,7 @@ public class StudentController {
     }
 
     @ApiOperation(value="创建用户", notes="根据Student对象创建用户")
-    @ApiImplicitParam(name = "student", value = "用户详细实体Student", required = true, defaultValue = "Student")
+    @ApiImplicitParam(name = "student", value = "用户详细实体Student", required = true, dataType = "Student")
     @RequestMapping(value="/post", method=RequestMethod.POST)
     public String postStudent(@RequestBody Student student) {
         int i = studentService.insert(student);
