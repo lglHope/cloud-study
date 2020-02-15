@@ -10,7 +10,7 @@
         <NoSql name="mongoAppender" bufferSize="1">
             <!--写到mongodb数据库名为"log"里的集合名为"log4j2"中,数据库需要先手动创建好，集合不需要手动创建，如果集合"log4j2"不存在，会自动创建-->
             <!-- 本地mongodb没开启账号验证 -->
-            <MongoDb3 databaseName="logs" collectionName="log" server="192.168.31.193" port="27017"
+            <MongoDb3 databaseName="logs" collectionName="log" server="192.168.1.100" port="27017"
                      username="admin" password="123456"/>
 
             <!-- 连接远程mongodb，需要校验账号密码，注意账号与数据库的权限问题，如果没权限会报错:
