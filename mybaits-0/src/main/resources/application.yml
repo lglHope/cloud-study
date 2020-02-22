@@ -42,7 +42,19 @@ spring:
   aop:
     auto: true
     proxy-target-class: false
+  mail:
+    host: smtp.qq.com
+    username: l1911739019@qq.com
+    password: 123456  # 这里的用户名和密码每个人都是不一样的需要自己去邮箱里面设置获取
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 #  profiles:
 #    active: dev
+
 logging:
   config: classpath:config/logging-dev.xml
