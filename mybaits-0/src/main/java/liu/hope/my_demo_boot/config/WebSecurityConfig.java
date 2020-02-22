@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     // 登录成功之后跳转的路径
 //                    .defaultSuccessUrl("/getMyFriend")
                     .successHandler((request, response, authentication) -> {
+                        //  实现登录成功之后跳转回原先登录前的页面
                         response.setContentType("application/json;charset=utf-8");
                         HttpSessionRequestCache httpSessionRequestCache = new HttpSessionRequestCache();
                         SavedRequest saveRequest = httpSessionRequestCache.getRequest(request, response);
