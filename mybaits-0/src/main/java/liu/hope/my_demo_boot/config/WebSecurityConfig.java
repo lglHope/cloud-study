@@ -12,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 
-import javax.annotation.Resource;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //通过formLogin()定义当需要用户登录时候，转到的登录页面。
     //configureGlobal(AuthenticationManagerBuilder auth)方法，在内存中创建了一个用户，该用户的名称为user，密码为password，用户角色为USER
 
-    @Resource
+    @Autowired
     private UserServiceImpl userService;
 
     @Override
